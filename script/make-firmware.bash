@@ -57,7 +57,8 @@ readonly build_1_3_options_efr32=(
 )
 
 readonly build_1_3_options_nrf=(
-    ""
+    '-DOT_BOOTLOADER=USB'
+    '-DOT_CSL_RECEIVER=ON'
 )
 
 readonly build_1_2_options_common=(
@@ -235,8 +236,9 @@ prebuild_and_build()
             NRFUTIL=/tmp/nrfutil-${ostype}
 
             if [ ! -f $NRFUTIL ]; then
-                wget -O $NRFUTIL https://github.com/NordicSemiconductor/pc-nrfutil/releases/download/v6.1/nrfutil-${ostype}
-                chmod +x $NRFUTIL
+                wget -O $NRFUTIL https://github.com/NordicSemiconductor/pc-nrfutil/releases/download/v6.1.2/nrfutil-${ostype}
+                #chmod +x $NRFUTIL
+				chmod a+rwx $NRFUTIL
             fi
 
             # Generate private key

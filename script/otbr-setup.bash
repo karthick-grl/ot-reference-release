@@ -71,7 +71,7 @@ configure_apt_source
 echo "127.0.0.1 $(hostname)" >>/etc/hosts
 chown -R pi:pi /home/pi/repo
 cd /home/pi/repo/ot-br-posix
-apt-get update
+apt-get update --allow-releaseinfo-change
 apt-get install -y --no-install-recommends git python3-pip
 su -c "${BUILD_OPTIONS[*]} script/bootstrap" pi
 

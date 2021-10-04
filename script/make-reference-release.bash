@@ -47,7 +47,7 @@ main()
     for platform in "${OT_PLATFORMS[@]}"; do
         OUTPUT_ROOT="$OUTPUT_ROOT"/fw_dongle_${platform}/ ./script/make-firmware.bash "${platform}"
     done
-
+	
     # ==========================================================================
     # Build THCI
     # ==========================================================================

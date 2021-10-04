@@ -53,9 +53,9 @@ main() {
 
   [ -d "$STAGE_DIR" ] || mkdir -p "$STAGE_DIR"
   cp -v "$IMAGE_FILE" "$STAGE_DIR"/raspbian.img
-
+  
   python3 -m git_archive_all "$STAGE_DIR"/repo.tar.gz
-
+  
   sudo mkdir -p "$IMAGE_DIR"
   sudo script/mount.bash "$STAGE_DIR"/raspbian.img "$IMAGE_DIR"
 
@@ -71,10 +71,13 @@ main() {
     echo "dtoverlay=pi3-disable-bt" | sudo tee -a "$IMAGE_DIR"/boot/config.txt
     sudo touch "$IMAGE_DIR"/boot/ssh && sync
     LOOP_NAME=$(losetup -j $STAGE_DIR/raspbian.img --output NAME -n)
-    sudo sh -c "dcfldd of=$STAGE_DIR/otbr.img if=$LOOP_NAME bs=1m && sync"
+	for eachloop in $LOOP_NAME; do
+		sudo sh -c "dcfldd of=$STAGE_DIR/otbr.img if=$eachloop bs=1m && sync"
+	done
+	#sudo sh -c "dcfldd of=$STAGE_DIR/otbr.img if=$LOOP_NAME bs=1m && sync"
     sudo cp $STAGE_DIR/otbr.img $STAGE_DIR/otbr_original.img
     if [[ ! -f /usr/bin/pishrink.sh ]]; then
-      sudo wget https://raw.githubusercontent.com/Drewsif/PiShrink/master/pishrink.sh -O /usr/bin/pishrink.sh && sudo chmod a+x /usr/bin/pishrink.sh
+      sudo wget https://raw.githubusercontent.com/Drewsif/PiShrink/master/pishrink.sh -O /usr/bin/pishrink.sh && sudo chmod a+rwx /usr/bin/pishrink.sh
     fi
     sudo /usr/bin/pishrink.sh $STAGE_DIR/otbr.img
     if [[ -n ${SD_CARD:=} ]]; then
