@@ -10,7 +10,7 @@
 	branch = cert
 [submodule "openthread"]
 	path = openthread
-	url = https://github.com/openthread/openthread
+	url = https://github.com/karthick-grl/openthread
 [submodule "docker-rpi-emu"]
 	path = docker-rpi-emu
 	url = https://github.com/ryankurte/docker-rpi-emu.git
